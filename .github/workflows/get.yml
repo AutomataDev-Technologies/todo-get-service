@@ -4,6 +4,11 @@ on:
 permissions:
   id-token: write
   contents: read
+
+env:
+  acr_repo_image: todoappconatinerregistry.azurecr.io/todo-get-service
+  image_version: v1
+  
 jobs:
   buildAndPush:
     name: build and push to acr
@@ -12,7 +17,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v6.0.0      
       - name: image build
-        run: docker build -t todo-get-service:v1 .
+        run: docker build -t todo-get-service:$image_version .
       - name: Azure Login
         uses: Azure/login@v2.3.0
         with:
@@ -26,6 +31,6 @@ jobs:
       - name: acr login
         run: az acr login --name todoappconatinerregistry
       - name: tag to acr
-        run: docker tag todo-get-service:v1 todoappconatinerregistry.azurecr.io/todo-get-service:v1        
+        run: docker tag todo-get-service:v1 $acr_repo_image:$image_version    
       - name: push to acr
-        run: docker push todoappconatinerregistry.azurecr.io/todo-get-service:v1
+        run: docker push $acr_repo_image:$image_version
