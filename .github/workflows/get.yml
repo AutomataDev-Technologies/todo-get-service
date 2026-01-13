@@ -5,7 +5,7 @@ permissions:
   id-token: write
   contents: read
 env:
-      acr_login_server: todoaksacrspsingh.azurecr.io
+      acr_login_server: sazsatyaprakashacr.azurecr.io
       image_name: todo-get-service
       image_version: v1
 jobs:
@@ -24,7 +24,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: acr login
-        run: az acr login --name todoaksacrspsingh
+        run: az acr login --name sazsatyaprakashacr
       - name: tag to acr
         run: docker tag $image_name:$image_version $acr_login_server/$image_name:$image_version        
       - name: push to acr
